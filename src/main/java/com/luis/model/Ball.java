@@ -1,8 +1,4 @@
 package com.luis.model;
-
-import com.luis.Game;
-import com.luis.controller.GameController;
-
 import java.awt.*;
 
 public class Ball implements Runnable {
@@ -47,7 +43,6 @@ public class Ball implements Runnable {
                 e.printStackTrace();
             }
         }
-
     }
 
     public void move() {
@@ -61,6 +56,11 @@ public class Ball implements Runnable {
         y += vel_Y;
     }
 
+
+    /***
+     *
+     * En las lineas 50 y 53 se hace el calculo para invertir el movimiento, no hace falta este metodo
+     */
     public void rebound(int value) {
         switch (value) {
             case 0:

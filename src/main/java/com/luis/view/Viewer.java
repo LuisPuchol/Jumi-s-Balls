@@ -1,20 +1,24 @@
 package com.luis.view;
 
-import com.luis.model.Ball;
+import com.luis.model.BallDTO;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Viewer extends Canvas {
-    private ArrayList<Ball> balls;
-    private GameView gameView;
+    private ArrayList<BallDTO> ballDTOs;
+    private BufferedImage offscreenBuffer;
+    private Graphics2D offscreenGraphics;
 
     public Viewer() {
         System.out.println("Viewers creado");
         this.setSize(500, 500);
         this.setBackground(Color.CYAN);
-        this.balls = new ArrayList<>();
+        this.ballDTOs = new ArrayList<>();
+
+        offscreenBuffer = new BufferedImage(500, 500, BufferedImage.TYPE_INT_RGB);
+        offscreenGraphics = offscreenBuffer.createGraphics();
     }
 
     public void drawBall(Graphics2D g, int x, int y, int diameter, Color color) {
@@ -22,27 +26,32 @@ public class Viewer extends Canvas {
         g.fillOval(x, y, diameter, diameter);
     }
 
-    public void render(ArrayList<Ball> balls) {
-        this.balls = balls;
+    public void render(ArrayList<BallDTO> ballDTOs) {
+        this.ballDTOs = ballDTOs;
         repaint();
-
     }
 
+    @Override
+    public void update(Graphics g) {
+        paint(g);
+    }
+
+    @Override
     public void paint(Graphics g) {
-        if (balls == null) return;
+        if (ballDTOs == null) return;
 
-        Graphics2D g2D = (Graphics2D) g;
+        offscreenGraphics.setColor(Color.CYAN);
+        offscreenGraphics.fillRect(0, 0, 500, 500);
 
-        g2D.setColor(Color.CYAN);
-        g2D.fillRect(0, 0, getWidth(), getHeight());
-
-        for (Ball ball : balls) {
-            drawBall(g2D, ball.getX(), ball.getY(), ball.getDiameter(), ball.getColor());
+        for (BallDTO ballDTO : ballDTOs) {
+            drawBall(offscreenGraphics, ballDTO.getX(), ballDTO.getY(),
+                    ballDTO.getDiameter(), ballDTO.getColor());
         }
+
+        g.drawImage(offscreenBuffer, 0, 0, this);
     }
 
     public Canvas getCanvas() {
         return this;
     }
-
 }

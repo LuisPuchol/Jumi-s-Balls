@@ -1,6 +1,7 @@
 package com.luis.controller;
 
 import com.luis.model.Ball;
+import com.luis.model.BallDTO;
 import com.luis.model.GameModel;
 import com.luis.view.GameView;
 
@@ -12,15 +13,16 @@ public class GameController {
     private boolean isRunning;
 
     public GameController() {
-        this.gameView = new GameView(this);
         this.gameModel = new GameModel(this);
+
+        this.gameView = new GameView(this);
 
         this.isRunning = false;
         start();
     }
 
-    public ArrayList<Ball> getBalls() {
-        return gameModel.getBalls();
+    public ArrayList<BallDTO> getBalls() {
+        return gameModel.getBallDTOs();
     }
 
     public void start() {
@@ -48,5 +50,5 @@ public class GameController {
 
         gameModel.stop();
     }
-
 }
+
