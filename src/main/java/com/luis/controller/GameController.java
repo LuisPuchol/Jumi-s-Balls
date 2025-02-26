@@ -1,6 +1,5 @@
 package com.luis.controller;
 
-import com.luis.model.Ball;
 import com.luis.model.BallDTO;
 import com.luis.model.GameModel;
 import com.luis.view.GameView;
