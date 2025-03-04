@@ -91,7 +91,7 @@ public class GameModel {
     }
 
 
-    
+
     public ArrayList<BallDTO> getBallDTOsPro() {
         if (!hasGameStarted) return new ArrayList<>();
 
